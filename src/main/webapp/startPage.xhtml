@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Start Page</title>
+    <h:outputStylesheet library="css" name="styleStartPage.css" />
+</h:head>
+<h:body>
+    <canvas id="draw" width="840" height="400"></canvas>
+
+    <h:form>
+        <div id="commandLinks">
+            <p>Choose X coordinate(s): </p>
+            <h:commandLink action="#{attemptBean.setXValue('-2')}" value="-2" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('-1.5')}" value="-1.5" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('-1')}" value="-1" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('-0.5')}" value="-0.5" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('0')}" value="0" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('0.5')}" value="0.5" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('1')}" value="1" immediate="true" /><span> </span>
+            <h:commandLink action="#{attemptBean.setXValue('1.5')}" value="1.5" immediate="true" /><span> </span>
+        </div>
+
+        <div>
+            <p>Input Y coordinate: </p>
+            <h:inputText id="yField" value="#{attemptBean.y}" />
+        </div>
+
+        <div id="commandButtons">
+            <p>Choose R : </p>
+            <h:selectOneRadio value="#{attemptBean.r}">
+                <f:selectItem itemValue="1" itemLabel="1" />
+                <f:selectItem itemValue="2" itemLabel="2" />
+                <f:selectItem itemValue="3" itemLabel="3" />
+                <f:selectItem itemValue="4" itemLabel="4" />
+                <f:selectItem itemValue="5" itemLabel="5" />
+            </h:selectOneRadio>
+        </div>
+
+        <h:commandButton value="Submit" action="#{attemptBean.submit}" />
+    </h:form>
+</h:body>
+</html>

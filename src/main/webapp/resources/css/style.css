@@ -1,0 +1,83 @@
+.analog-clock {
+    width: 200px;
+    height: 200px;
+    border: 10px solid #333;
+    border-radius: 50%;
+    position: relative;
+    margin: 50px auto;
+    background: white;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 60px;
+    background: #333;
+    margin-left: -3px;
+}
+
+.minute-hand {
+    width: 4px;
+    height: 80px;
+    background: #666;
+    margin-left: -2px;
+}
+
+.second-hand {
+    width: 2px;
+    height: 90px;
+    background: red;
+    margin-left: -1px;
+}
+
+.center-circle {
+    width: 12px;
+    height: 12px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -6px 0 0 -6px;
+}
+
+
+.clock-numbers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.clock-number {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    transform: translate(-50%, -50%);
+}
+
+/* Точное позиционирование 12 цифр */
+.clock-number:nth-child(1) { top: 10%; left: 50%; } /* 12 */
+.clock-number:nth-child(2) { top: 14%; left: 74%; } /* 1 */
+.clock-number:nth-child(3) { top: 25%; left: 90%; } /* 2 */
+.clock-number:nth-child(4) { top: 50%; left: 95%; } /* 3 */
+.clock-number:nth-child(5) { top: 75%; left: 90%; } /* 4 */
+.clock-number:nth-child(6) { top: 86%; left: 74%; } /* 5 */
+.clock-number:nth-child(7) { top: 90%; left: 50%; } /* 6 */
+.clock-number:nth-child(8) { top: 86%; left: 26%; } /* 7 */
+.clock-number:nth-child(9) { top: 75%; left: 10%; } /* 8 */
+.clock-number:nth-child(10) { top: 50%; left: 5%; } /* 9 */
+.clock-number:nth-child(11) { top: 25%; left: 10%; } /* 10 */
+.clock-number:nth-child(12) { top: 14%; left: 26%; } /* 11 */

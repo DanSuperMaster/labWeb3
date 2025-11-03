@@ -1,0 +1,31 @@
+.command-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 2px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.command-button:hover {
+    background-color: #e0e0e0;
+    border-color: #999;
+}
+
+/* Класс для активной/выделенной кнопки */
+.command-button.active,
+.selected-button {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #45a049;
+}
+
+.command-button:active {
+    transform: scale(0.98);
+}

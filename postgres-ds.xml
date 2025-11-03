@@ -1,0 +1,24 @@
+<datasources xmlns="urn:jboss:domain:datasources:5.0">
+    <datasource jndi-name="java:/jdbc/PostgresDS"
+                pool-name="PostgresDS"
+                enabled="true"
+                use-java-context="true">
+        <connection-url>jdbc:postgresql://database:5432/mydb</connection-url>
+        <driver>postgresql-42.7.4.jar</driver>
+        <security>
+            <user-name>postgres</user-name>
+            <password>postgres</password>
+        </security>
+        <validation>
+            <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
+            <background-validation>true</background-validation>
+            <background-validation-millis>60000</background-validation-millis>
+        </validation>
+    </datasource>
+
+    <drivers>
+        <driver name="postgresql" module="org.postgresql">
+            <driver-class>org.postgresql.Driver</driver-class>
+        </driver>
+    </drivers>
+</datasources>

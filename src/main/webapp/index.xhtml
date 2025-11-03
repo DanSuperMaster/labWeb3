@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Лабораторная работа №3 по веб-программированию</title>
+    <h:outputStylesheet library="css" name="style.css" />
+    <h:outputScript library="js" name="time.js" />
+</h:head>
+<h:body>
+    <div id="header">
+        <h1>
+            <span>Abulfatov</span>
+            Ruslan
+        </h1>
+        <h2>P32312, var: 66647</h2>
+    </div>
+
+    <div class="analog-clock" id="analogClock">
+        <div class="clock-numbers">
+            <div class="clock-number">12</div>
+            <div class="clock-number">1</div>
+            <div class="clock-number">2</div>
+            <div class="clock-number">3</div>
+            <div class="clock-number">4</div>
+            <div class="clock-number">5</div>
+            <div class="clock-number">6</div>
+            <div class="clock-number">7</div>
+            <div class="clock-number">8</div>
+            <div class="clock-number">9</div>
+            <div class="clock-number">10</div>
+            <div class="clock-number">11</div>
+        </div>
+        <div class="hand hour-hand" id="hourHand"></div>
+        <div class="hand minute-hand" id="minuteHand"></div>
+        <div class="hand second-hand" id="secondHand"></div>
+        <div class="center-circle"></div>
+    </div>
+
+    <div class="main">
+        <h:form>
+            <h:commandButton styleClass="buttonStart" value="Start" action="startPage"/>
+        </h:form>
+    </div>
+
+
+</h:body>
+</html>
