@@ -17,7 +17,6 @@ public class AttemptBean implements Serializable {
         try {
             this.x = Double.parseDouble(xValue.trim());
         } catch (NumberFormatException e) {
-            // Обработка ошибки
             System.err.println("Ошибка парсинга X: " + xValue);
         }
     }
@@ -26,18 +25,15 @@ public class AttemptBean implements Serializable {
         try {
             this.y = Double.parseDouble(yValue.trim());
         } catch (NumberFormatException e) {
-            // Обработка ошибки
             System.err.println("Ошибка парсинга X: " + yValue);
         }
     }
 
     public String submit() {
-        // Логика обработки данных
         System.out.println("R: " + r + ", X: " + x + ", Y: " + y);
         return null; // остаться на той же странице
     }
 
-    // Геттеры и сеттеры
     public int getR() { return r; }
     public void setR(int r) { this.r = r; }
 

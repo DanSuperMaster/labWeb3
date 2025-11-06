@@ -1,8 +1,8 @@
-FROM  bitnamilegacy/wildfly:21
+FROM  bitnamilegacy/wildfly:21.0.1
 
 
 COPY ./build/libs/web3.war /opt/bitnami/wildfly/standalone/deployments/ROOT.war
-COPY postgres-ds.xml /opt/bitnami/wildfly/standalone/deployments/
+COPY src/main/webapp/WEB-INF/postgres-ds.xml /opt/bitnami/wildfly/standalone/deployments/
 COPY driver/postgresql-42.7.4.jar /opt/bitnami/wildfly/standalone/deployments/
 
 EXPOSE 8080 9990
