@@ -9,7 +9,7 @@ print.addEventListener("mouseenter", handleCanvasMouseEnter);
 print.addEventListener("mouseleave", handleCanvasMouseLeave);
 document.addEventListener('DOMContentLoaded', function() {
     // Находим все радиокнопки и добавляем обработчики
-    var radioButtons = document.querySelectorAll('input[name="j_idt6:j_idt26"]');
+    var radioButtons = document.querySelectorAll('input[name="j_idt7:j_idt11"]');
     radioButtons.forEach(function (radio) {
         radio.addEventListener('change', function () {
             drawAreas();
@@ -61,11 +61,14 @@ function handleCanvasClick(event) {
     var mathCoords = convertCanvasToMath(clickX, clickY);
 
     // Устанавливаем значения в скрытые поля
-    document.getElementById('j_idt6:propertyX').value = mathCoords.x;
-    document.getElementById('j_idt6:propertyY').value = mathCoords.y;
+    //document.getElementById('j_idt7:propertyX').value = mathCoords.x;
+    //document.getElementById('j_idt7:propertyY').value = mathCoords.y;
+    setYValueAndSync(mathCoords.y);
+    setXValueAndSync(mathCoords.x);
 
     // Вызываем remoteCommand для отправки данных
-    const linkA = document.querySelector('input[name="j_idt6:j_idt33"]');
+    const linkA = document.querySelector('input[name="j_idt7:j_idt18"]');
+    linkA.click();
     console.log("qwerty")
 
 
@@ -178,7 +181,7 @@ function drawAreas() {
 // функции для получения выбранных параметров (кроме r нам больше ничего не надо, т.к. через бины работаем)
 
 function getRValue() {
-    var rRadio = document.querySelector('input[name="j_idt6:j_idt26"]:checked');
+    var rRadio = document.querySelector('input[name="j_idt7:j_idt11"]:checked');
     if (rRadio) {
         var value = rRadio.value;
         console.log("Radio value:", value);
@@ -284,6 +287,75 @@ function noNoNoMisterFish() {
 
 setInterval(noNoNoMisterFish, 1000);
 
+
+
+// Функция для синхронизации скрытых полей с выбранными значениями
+function syncHiddenFields() {
+    // Получаем текущие значения из бинов или полей ввода
+    var xValue = document.getElementById('j_idt7:propertyX').value;
+    var yValue = document.getElementById('j_idt7:propertyY').value;
+
+    console.log("Синхронизация полей - X:", xValue, "Y:", yValue);
+
+    // Обновляем видимое поле Y, если оно есть
+    var yField = document.getElementById('j_idt7:yField');
+    if (yField && yValue) {
+        yField.value = yValue;
+    }
+}
+
+// Функция для установки значения X и автоматической синхронизации
+function setXValueAndSync(value) {
+    console.log("Установка X:", value);
+
+    // Устанавливаем значение в скрытое поле
+    document.getElementById('j_idt7:propertyX').value = value;
+
+    // Синхронизируем поля
+    syncHiddenFields();
+
+    // Перерисовываем области, если нужно
+    drawAreas();
+}
+
+// Функция для установки значения Y и автоматической синхронизации
+function setYValueAndSync(value) {
+    console.log("Установка Y:", value);
+
+    // Устанавливаем значение в скрытое поле и видимое поле
+    document.getElementById('j_idt7:propertyY').value = value;
+
+    var yField = document.getElementById('j_idt7:yField');
+    if (yField) {
+        yField.value = value;
+    }
+
+    // Синхронизируем поля
+    syncHiddenFields();
+}
+
+// Обработчик изменения поля Y
+function setupYFieldListener() {
+    var yField = document.getElementById('j_idt7:yField');
+    if (yField) {
+        yField.addEventListener('input', function() {
+            setYValueAndSync(this.value);
+        });
+
+        yField.addEventListener('change', function() {
+            setYValueAndSync(this.value);
+        });
+    }
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    setupYFieldListener();
+    syncHiddenFields(); // Первоначальная синхронизация
+
+    // Мониторинг изменений в полях
+    setInterval(syncHiddenFields, 500);
+});
 
 
 
