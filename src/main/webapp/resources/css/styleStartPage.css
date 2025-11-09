@@ -18,7 +18,6 @@
     border-color: #999;
 }
 
-/* Класс для активной/выделенной кнопки */
 .command-button.active,
 .selected-button {
     background-color: #4CAF50;
@@ -28,4 +27,77 @@
 
 .command-button:active {
     transform: scale(0.98);
+}
+
+#left-side {
+    float: left;
+    width: 50%;
+}
+
+#right-sight {
+    float: right;
+    width: 50%;
+}
+
+#dotsForm {
+    margin-top: 20px;
+}
+
+#dotsForm:dotsTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+#dotsForm:dotsTable .ui-datatable-header {
+    border: none;
+}
+
+#dotsForm:dotsTable th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+#dotsForm:dotsTable td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+
+#dotsForm:dotsTable tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+#dotsForm:dotsTable tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+
+#dotsForm:dotsTable tr:hover {
+    background-color: #e3f2fd;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#dotsForm:dotsTable tr:hover td {
+    color: #1976d2;
+}
+
+#dotsForm:dotsTable td:last-child {
+    font-weight: 600;
 }

@@ -3,46 +3,81 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Start Page</title>
 
 </h:head>
 <h:body>
-    <canvas id="draw" width="840" height="400"></canvas>
 
-    <h:form>
-        <div id="commandLinks">
-            <p>Choose X coordinate(s): </p>
-            <h:commandLink action="#{attemptBean.setXValue('-2')}" value="-2" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('-1.5')}" value="-1.5" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('-1')}" value="-1" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('-0.5')}" value="-0.5" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('0')}" value="0" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('0.5')}" value="0.5" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('1')}" value="1" immediate="true" /><span> </span>
-            <h:commandLink action="#{attemptBean.setXValue('1.5')}" value="1.5" immediate="true" /><span> </span>
-        </div>
+    <div id="left-side">
+        <canvas id="draw" width="840" height="400"></canvas>
 
-        <div>
-            <p>Input Y coordinate: </p>
-            <h:inputText id="yField" value="#{attemptBean.y}" />
-        </div>
 
-        <div id="commandButtons">
-            <p>Choose R : </p>
-            <h:selectOneRadio value="#{attemptBean.r}">
-                <f:selectItem itemValue="1" itemLabel="1" />
-                <f:selectItem itemValue="2" itemLabel="2" />
-                <f:selectItem itemValue="3" itemLabel="3" />
-                <f:selectItem itemValue="4" itemLabel="4" />
-                <f:selectItem itemValue="5" itemLabel="5" />
-            </h:selectOneRadio>
-        </div>
+        <h:form>
+            <p:remoteCommand name="myCommand" actionListener="#{attemptBean.submit}" style="display: none;"/>
+            <h:inputText id="propertyX" value="#{attemptBean.x}" style="display:none"/>
+            <h:inputText id="propertyY" value="#{attemptBean.y}" style="display:none"/>
+            <div id="commandLinks">
+                <p>Choose X coordinate(s): </p>
+                <h:commandLink action="#{attemptBean.setXValue('-2')}" value="-2" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('-1.5')}" value="-1.5" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('-1')}" value="-1" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('-0.5')}" value="-0.5" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('0')}" value="0" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('0.5')}" value="0.5" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('1')}" value="1" immediate="true" /><span> </span>
+                <h:commandLink action="#{attemptBean.setXValue('1.5')}" value="1.5" immediate="true" /><span> </span>
+            </div>
 
-        <h:commandButton value="Submit" action="#{attemptBean.submit}" />
-    </h:form>
+            <div>
+                <p>Input Y coordinate: </p>
+                <h:inputText id="yField" value="#{attemptBean.y}" />
+            </div>
+
+            <div id="commandButtons">
+                <p>Choose R : </p>
+                <h:selectOneRadio value="#{attemptBean.r}">
+                    <f:selectItem itemValue="1" itemLabel="1" />
+                    <f:selectItem itemValue="2" itemLabel="2" />
+                    <f:selectItem itemValue="3" itemLabel="3" />
+                    <f:selectItem itemValue="4" itemLabel="4" />
+                    <f:selectItem itemValue="5" itemLabel="5" />
+                </h:selectOneRadio>
+            </div>
+
+            <h:commandButton value="Submit" action="#{attemptBean.submit}" />
+        </h:form>
+    </div>
+    <div id="right-sight">
+        <h:form id="dotsForm">
+            <h:dataTable id="dotsTable" value="#{dataBaseBean.dots}" var="o">
+                <h:column>
+                    <f:facet name="header">X</f:facet>
+                    #{o.x}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Y</f:facet>
+                    #{o.y}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">R</f:facet>
+                    #{o.r}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">In area</f:facet>
+                    #{o.inArea==1? 'In area' : 'Out of area'}
+                </h:column>
+            </h:dataTable>
+
+            <h:commandButton value="Refresh" style="display:none">
+                <f:ajax render="dotsForm:dotsTable" />
+            </h:commandButton>
+
+        </h:form>
+    </div>
 </h:body>
 <h:outputScript library="js" name="script.js" />
 <h:outputStylesheet library="css" name="styleStartPage.css" />

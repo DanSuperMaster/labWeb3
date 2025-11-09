@@ -9,7 +9,7 @@ print.addEventListener("mouseenter", handleCanvasMouseEnter);
 print.addEventListener("mouseleave", handleCanvasMouseLeave);
 document.addEventListener('DOMContentLoaded', function() {
     // Находим все радиокнопки и добавляем обработчики
-    var radioButtons = document.querySelectorAll('input[name="j_idt6:j_idt25"]');
+    var radioButtons = document.querySelectorAll('input[name="j_idt6:j_idt26"]');
     radioButtons.forEach(function (radio) {
         radio.addEventListener('change', function () {
             drawAreas();
@@ -52,26 +52,23 @@ function handleCanvasMouseMove(event) {
 function handleCanvasClick(event) {
     // Получаем выбранные радиусы
 
-    if (listOfR.length === 0) {
-        document.getElementById("demo").innerHTML = "Ошибка: выберите радиус R";
-        return;
-    }
 
     // Получаем координаты клика относительно canvas
     var rect = print.getBoundingClientRect();
     var clickX = event.clientX - rect.left;
     var clickY = event.clientY - rect.top;
 
-    // Генерируем случайную точку внутри круга разброса
-    //var randomPoint = getRandomPointInCircle(clickX, clickY, spreadRadius);
+    var mathCoords = convertCanvasToMath(clickX, clickY);
 
-    // Преобразуем координаты canvas в математические координаты
-    //var mathCoords = convertCanvasToMath(randomPoint.x, randomPoint.y);
+    // Устанавливаем значения в скрытые поля
+    document.getElementById('j_idt6:propertyX').value = mathCoords.x;
+    document.getElementById('j_idt6:propertyY').value = mathCoords.y;
 
-    // Отображаем точку разброса на графике
-    //drawSpreadPoint(randomPoint.x, randomPoint.y);
+    // Вызываем remoteCommand для отправки данных
+    const linkA = document.querySelector('input[name="j_idt6:j_idt33"]');
+    console.log("qwerty")
 
-    // Отправляем точку и получаем результат попадания
+
     //sendPointWithSpread(mathCoords.x, mathCoords.y, listOfR, randomPoint.x, randomPoint.y);
 }
 
@@ -181,7 +178,7 @@ function drawAreas() {
 // функции для получения выбранных параметров (кроме r нам больше ничего не надо, т.к. через бины работаем)
 
 function getRValue() {
-    var rRadio = document.querySelector('input[name="j_idt6:j_idt25"]:checked');
+    var rRadio = document.querySelector('input[name="j_idt6:j_idt26"]:checked');
     if (rRadio) {
         var value = rRadio.value;
         console.log("Radio value:", value);
@@ -277,6 +274,15 @@ function drawLetters() {
     ctx.fillText("-2.5", 96, 23 * 9 + 12);
     ctx.fillText("-5", 8, 23 * 9 + 12);
 }
+
+function noNoNoMisterFish() {
+    var refreshButton = document.querySelector('[id$="refreshBtn"]');
+                        if (refreshButton) {
+                            refreshButton.click();
+                        }
+}
+
+setInterval(noNoNoMisterFish, 1000);
 
 
 
