@@ -8,7 +8,6 @@ print.addEventListener("mousemove", handleCanvasMouseMove);
 print.addEventListener("mouseenter", handleCanvasMouseEnter);
 print.addEventListener("mouseleave", handleCanvasMouseLeave);
 document.addEventListener('DOMContentLoaded', function() {
-    // Находим все радиокнопки и добавляем обработчики
     var radioButtons = document.querySelectorAll('input[name="j_idt7:j_idt11"]');
     radioButtons.forEach(function (radio) {
         radio.addEventListener('change', function () {
@@ -17,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     drawAreas();
 });
+
+document.addEventListener('DOMContentLoaded', drawChangeR);
 
 
 
@@ -124,6 +125,7 @@ function drawAreas() {
 
     // Перерисовываем координатную систему
     drawCoordinates();
+    drawPoints();
 
     // Получаем выбранные радиусы
     var selectedRadii = getRValue();
@@ -280,49 +282,40 @@ function drawLetters() {
 
 function noNoNoMisterFish() {
     var refreshButton = document.querySelector('[id$="refreshBtn"]');
-                        if (refreshButton) {
-                            refreshButton.click();
-                        }
+    if (refreshButton) {
+        refreshButton.click();
+    }
 }
 
 setInterval(noNoNoMisterFish, 1000);
 
 
 
-// Функция для синхронизации скрытых полей с выбранными значениями
 function syncHiddenFields() {
-    // Получаем текущие значения из бинов или полей ввода
     var xValue = document.getElementById('j_idt7:propertyX').value;
     var yValue = document.getElementById('j_idt7:propertyY').value;
 
     console.log("Синхронизация полей - X:", xValue, "Y:", yValue);
 
-    // Обновляем видимое поле Y, если оно есть
     var yField = document.getElementById('j_idt7:yField');
     if (yField && yValue) {
         yField.value = yValue;
     }
 }
 
-// Функция для установки значения X и автоматической синхронизации
 function setXValueAndSync(value) {
     console.log("Установка X:", value);
 
-    // Устанавливаем значение в скрытое поле
     document.getElementById('j_idt7:propertyX').value = value;
 
-    // Синхронизируем поля
     syncHiddenFields();
 
-    // Перерисовываем области, если нужно
     drawAreas();
 }
 
-// Функция для установки значения Y и автоматической синхронизации
 function setYValueAndSync(value) {
     console.log("Установка Y:", value);
 
-    // Устанавливаем значение в скрытое поле и видимое поле
     document.getElementById('j_idt7:propertyY').value = value;
 
     var yField = document.getElementById('j_idt7:yField');
@@ -330,11 +323,9 @@ function setYValueAndSync(value) {
         yField.value = value;
     }
 
-    // Синхронизируем поля
     syncHiddenFields();
 }
 
-// Обработчик изменения поля Y
 function setupYFieldListener() {
     var yField = document.getElementById('j_idt7:yField');
     if (yField) {
@@ -348,12 +339,10 @@ function setupYFieldListener() {
     }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     setupYFieldListener();
-    syncHiddenFields(); // Первоначальная синхронизация
+    syncHiddenFields();
 
-    // Мониторинг изменений в полях
     setInterval(syncHiddenFields, 500);
 });
 
@@ -364,3 +353,150 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+function getPointsFromTable() {
+    var points = [];
+    var table = document.querySelector('table[id$="dotsTable"]');
+
+    if (!table) {
+        console.log("Таблица точек не найдена");
+        return points;
+    }
+
+    var rows = table.querySelectorAll('tr');
+
+    for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].querySelectorAll('td');
+        if (cells.length >= 4) {
+            var point = {
+                x: parseFloat(cells[0].textContent.trim()),
+                y: parseFloat(cells[1].textContent.trim()),
+                r: parseFloat(cells[2].textContent.trim()),
+                inArea: cells[3].textContent.trim() === 'In area'
+            };
+            points.push(point);
+        }
+    }
+
+    console.log("Найдено точек:", points.length);
+    return points;
+}
+
+function drawPoints() {
+    var points = getPointsFromTable();
+    var currentR = getRValue();
+
+    if (!currentR) {
+        console.log("R не выбран, точки не отрисованы");
+        return;
+    }
+
+    console.log("Отрисовка точек для R =", currentR);
+
+    points.forEach(function(point) {
+        if (point.r === currentR) {
+            drawSinglePoint(point);
+        }
+    });
+}
+
+function drawSinglePoint(point) {
+    var canvasCoords = convertMathToCanvas(point.x, point.y, point.r);
+
+    ctx.beginPath();
+    ctx.arc(canvasCoords.x, canvasCoords.y, 4, 0, 2 * Math.PI);
+
+    if (point.inArea) {
+        ctx.fillStyle = 'green';
+    } else {
+        ctx.fillStyle = 'red';
+    }
+
+    ctx.fill();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.closePath();
+}
+
+
+function drawAreasOnly() {
+    var selectedRadii = getRValue();
+
+    if (selectedRadii != null) {
+        var currentR = parseInt(selectedRadii);
+        var color = getAreaColor(currentR);
+
+        var centerX = 23 * 8;
+        var centerY = 23 * 9;
+        var scale = currentR / 5;
+        var scaledR = 177 * scale;
+        var scaledHalfR = scaledR / 2;
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.rect(centerX, centerY, -scaledHalfR, -scaledR);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo((centerX + scaledR), centerY);
+        ctx.lineTo(centerX, (centerY - scaledR));
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, scaledHalfR, 0, 0.5 * Math.PI, false);
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+function getAreaColor(r) {
+    var colors = [
+        'rgba(0, 0, 255, 0.3)',
+        'rgba(0, 255, 0, 0.3)',
+        'rgba(255, 0, 0, 0.3)',
+        'rgba(255, 255, 0, 0.3)',
+        'rgba(255, 0, 255, 0.3)',
+    ];
+    return colors[r % colors.length];
+}
+
+
+
+function refreshCanvas() {
+    drawAreas();
+}
+
+function drawChangeR() {
+    var radioButtons = document.querySelectorAll('input[name="j_idt6:j_idt26"]');
+    radioButtons.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            drawAreas();
+        });
+    });
+
+    drawAreas();
+    setupYFieldListener();
+    syncHiddenFields();
+
+    setInterval(function() {
+        refreshCanvas();
+    }, 1000);
+}
+
+
+
+
+
+function noNoNoMisterFish() {
+    var refreshButton = document.querySelector('[id$="refreshBtn"]');
+    if (refreshButton) {
+        refreshButton.click();
+    }
+    setTimeout(refreshCanvas, 100);
+}
