@@ -1,4 +1,4 @@
-FROM  bitnamilegacy/wildfly:21
+FROM  bitnamilegacy/wildfly:21.0.1
 
 
 COPY ./build/libs/web3.war /opt/bitnami/wildfly/standalone/deployments/ROOT.war

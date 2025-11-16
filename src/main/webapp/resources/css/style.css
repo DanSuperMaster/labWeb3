@@ -68,7 +68,6 @@
     transform: translate(-50%, -50%);
 }
 
-/* Точное позиционирование 12 цифр */
 .clock-number:nth-child(1) { top: 10%; left: 50%; } /* 12 */
 .clock-number:nth-child(2) { top: 14%; left: 74%; } /* 1 */
 .clock-number:nth-child(3) { top: 25%; left: 90%; } /* 2 */

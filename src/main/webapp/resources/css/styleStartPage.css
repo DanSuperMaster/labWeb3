@@ -29,12 +29,12 @@
     transform: scale(0.98);
 }
 
-#left-side {
+.left-side {
     float: left;
     width: 50%;
 }
 
-#right-sight {
+.right-sight {
     float: right;
     width: 50%;
 }
